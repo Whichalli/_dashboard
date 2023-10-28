@@ -288,9 +288,6 @@ const crowdFundingABI = [
 	}
 ]
 
-const CrowdFundingContract = async (web3 ) => {
-    return new web3.eth.Contract(crowdFundingABI, "0xEb32F05fcA40fCe2ff29da953D47A51d2F7901dc");
-}
 var account;
 var owner;
 var title;
@@ -314,26 +311,15 @@ const _image = document.querySelector("input.image")
 	title = _title.value
 	description = _description.value,
 	target = _target.value,
+	deadline = Number(_deadline.value)
 	image = _image.value
 	
 console.log(owner, description, target, deadline, image)
 		let accounts = await connectWallet()
 		account = accounts[0]
 		let web3 = new Web3(window.ethereum)
-		const contract =  new web3.eth.Contract(crowdFundingABI, "0xEb32F05fcA40fCe2ff29da953D47A51d2F7901dc");
+		const contract =  new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
 		let targetInWei = web3.utils.toWei(`${target}`, "ether")
-
-		const blockNumber = await web3.eth.getBlockNumber();
-			const block = await web3.eth.getBlock(blockNumber);
-			if (block) {
-			const timestamp = block.timestamp;
-			deadline = timestamp + _deadline.value;
-			console.log(`Timestamp of the current block (${blockNumber}): ${timestamp}`);
-			console.log(deadline);
-			} else {
-			console.error(`Block ${blockNumber} not found`);
-			return null;
-			}
 			
 		const creation = await contract.methods.createCampaign(`${owner}`, `${title}`,`${description}`, `${targetInWei}`, `${deadline}`, `${image}`).send({
 			from: account
