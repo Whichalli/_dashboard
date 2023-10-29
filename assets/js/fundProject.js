@@ -644,7 +644,559 @@ const ERC20ABI =[
 		"type": "receive"
 	}
 ]
-
+const VENDOR_ABI= [
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "_wallet",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_feesWallet",
+				"type": "address"
+			},
+			{
+				"internalType": "contract ERC20",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_usdc",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_usdt",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_usdRate",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_purchaseStartTime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_purchaseEndTime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lockupPeriod",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "purchaser",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "beneficiary",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "TokenPurchase",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "vendor",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "beneficiary",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "TokenSwapped",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "ENSC_Token",
+		"outputs": [
+			{
+				"internalType": "contract ERC20",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "ENSC_Wallet",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_beneficiary",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_tokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Exachange_eNaira_For_ENSC",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_beneficiary",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountOut",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Exchange_ENSC_For_eNaira",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tokenIn",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountIn",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountOut",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Exchange_For_ENSC",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "contract ERC20",
+				"name": "_tokenOut",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountIn",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amountOut",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Exchange_From_ENSC",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "USDC",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "USDT",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "USD_RATE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "addTokenToWhitelist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "admin",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "allowedTokens",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "blacklistAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "blacklistCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "fees_Wallet",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isBlacklisted",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "lockupPeriod",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "purchaseEndTime",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "purchaseStartTime",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "removeAddressFromBlacklist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "tokenAddress",
+				"type": "address"
+			}
+		],
+		"name": "removeTokenFromWhitelist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_usdt",
+				"type": "address"
+			}
+		],
+		"name": "setUSDC",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_usdt",
+				"type": "address"
+			}
+		],
+		"name": "setUSDT",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_time",
+				"type": "uint256"
+			}
+		],
+		"name": "updateLockPeriod",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_time",
+				"type": "uint256"
+			}
+		],
+		"name": "updatePurchaseEndTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_time",
+				"type": "uint256"
+			}
+		],
+		"name": "updatePurchaseStartTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_newRate",
+				"type": "uint256"
+			}
+		],
+		"name": "updateRate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "weiSold",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "whitelistedTokenCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawBalance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	}
+]
 window.onload = async ( ) => {
     
 
@@ -652,12 +1204,56 @@ const projectId = document.querySelector(".projectId").value
 const data1 = document.querySelector(".data1")
 const data2 = document.querySelector(".p-info")
 const data3 = document.querySelector(".t-info")
+
+var oracleRate;
+var ensc_price;
+
     web3 = new Web3 (window.ethereum)
-   let accounts = await connectWallet()
-    let account = accounts[0]
+
+	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xbcfc54a3671199218d4a24d3e1ccf93697cac392");
+	oracleRate = await oracleContract.methods.USD_RATE().call()
+	let price = 1/Number(oracleRate)
+	ensc_price = price.toFixed(5)
+	console.log(ensc_price, "price")
 
     crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
+	var amountRaised = getCampaign.amountCollected;
+	var target = getCampaign.target;
+	var progress = ( ( amountRaised * 100 )/target).toFixed(2);
+	var deadline = Number(getCampaign.deadline);
+	var timeleftInSecs;
+	var result;
+	  try {
+    const blockNumber = await web3.eth.getBlockNumber();
+    const block = await web3.eth.getBlock(blockNumber);
+    if (block) {
+       console.log(deadline, "deadline")
+      const timestamp = Number(block.timestamp);
+	  console.log(timestamp, "block timestamp");
+      timeleftInSecs = deadline - timestamp
+	  console.log(timeleftInSecs, "sec")
+	  let toMilliseconds = timeleftInSecs * 1000;
+	  console.log(toMilliseconds, "ms")
+	  let endDate = new Date(toMilliseconds)
+	  console.log(endDate, "ends")
+	  let now = new Date().getTime();
+	  console.log(now, "now")
+
+	  let timeLeft = endDate - now;
+	  console.log(timeLeft)
+	  //handle calculation 
+	 result =  setInterval( solveTimeout(timeLeft), 
+	 1000) 
+		console.log(result)
+	 if ( timeLeft <= 0 ){
+		clearInterval(result)
+		result = [0, 0, 0,0]
+	 }
+	}
+	}catch(e){
+		console.error(e)
+	}
 
 	
     data1.innerHTML = `<div class="game-price-inner">
@@ -668,10 +1264,10 @@ const data3 = document.querySelector(".t-info")
                                 </div>
                                 <div class="price-details">
                                     <h3 class="mb-15">${getCampaign.title}</h3>
-                                    <div class="dsc">PRICE (ENSC) = 0.001282 USD</div>
+                                    <div class="dsc">PRICE (ENSC) = ${ensc_price} USD</div>
                                 </div>
                             </div>
-                            <div class="all-raise mb-10"> Total Raise ${web3.utils.fromWei(`${getCampaign.amountCollected}`, "ether")} ENSC ( 0% )</div>
+                            <div class="all-raise mb-10"> Total Raise ${web3.utils.fromWei(`${getCampaign.amountCollected}`, "ether")} ENSC ( ${progress} % )</div>
                         </div>
                         <div class="allocation-max text-center">
                             <img src="assets/images/project/icon-1.png" alt="icon-image" />
@@ -699,7 +1295,7 @@ const data3 = document.querySelector(".t-info")
                 <div class="progress-inner">
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="43"
-                            aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            aria-valuemin="0" aria-valuemax="100" style="width: ${progress}%">
                         </div>
                     </div>
                 </div>
@@ -791,6 +1387,16 @@ addresses.forEach((address, index) => {
 
 }
 
+const solveTimeout = ( timeLeft ) => {
+	   // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+	console.log(seconds, "sec")
+	console.log(days, "days")
+    return ( new Array( days, hours, minutes, seconds) )
+}
 const fund = async (  ) => {
     console.log();
     let input = document.querySelector(".amt").value;
