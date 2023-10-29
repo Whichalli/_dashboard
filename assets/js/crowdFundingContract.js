@@ -324,7 +324,7 @@ console.log(owner, description, target, deadline, image)
 		const creation = await contract.methods.createCampaign(`${owner}`, `${title}`,`${description}`, `${targetInWei}`, `${deadline}`, `${image}`).send({
 			from: account
 		})
-		console.log("campaign created successfully 🎉")
+		alert("campaign created successfully 🎉")
 
 	} catch (error) {
 		console.error(error)

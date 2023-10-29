@@ -311,7 +311,7 @@ window.onload = async ( ) => {
     const numberOfCampaigns = await crowdFundingContract.methods.numberOfCampaigns().call()
 
    console.log(numberOfCampaigns, "number of campaigns")
-    for ( i =0; i < Number(numberOfCampaigns); i++ ){    
+    for ( i =1; i < Number(numberOfCampaigns); i++ ){    
         console.log(i)
         const campaign = await crowdFundingContract.methods.campaigns(i).call();
         title = campaign.title;
@@ -331,7 +331,7 @@ window.onload = async ( ) => {
                                         <div class="project-info">
                                             <a href="${i}-project-details.html"><img src="${img}" alt="Explore-Image" /></a>
                                             <div class="project-auother">
-                                                <h4 class="mb-10"><a href="${0}-project-details.html">${title}</a></h4>
+                                                <h4 class="mb-10"><a href="${i}-project-details.html">${title}</a></h4>
                                                 <div class="dsc">PRICE (ENSC) = 0.001282 USD</div>
                                             </div>
                                         </div>

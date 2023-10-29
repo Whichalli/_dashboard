@@ -659,6 +659,7 @@ const data3 = document.querySelector(".t-info")
     crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
 
+	
     data1.innerHTML = `<div class="game-price-inner">
                         <div class="total-price">
                             <div class="price-inner d-flex mb-45">
@@ -763,6 +764,31 @@ const data3 = document.querySelector(".t-info")
                                 </div>
                             </div>
                         </div>`
+
+	const getDonators = await crowdFundingContract.methods.getDonators(projectId).call();
+	console.log(getDonators)
+
+let donators = document.querySelector("ul.donators");
+
+const addresses = getDonators[0];
+const donations = getDonators[1];
+
+// Iterate through the addresses and calculate total donations for each donator
+addresses.forEach((address, index) => {
+    const donationAmount = web3.utils.fromWei(donations[index], "ether");
+    
+    // Create a new list item element for each donator
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
+        <h4><span><img src="assets/images/icons/avater-2.svg" alt=""></span>${address.substring(0, 5)}....${address.slice(-5) }</h4>
+        <h5>ENSC</h5>
+        <h6>Amount: ${donationAmount}</h6>
+    `;
+
+    // Append the current list item to the donators list
+    donators.appendChild(listItem);
+});
+
 }
 
 const fund = async (  ) => {
@@ -785,7 +811,7 @@ const fund = async (  ) => {
 		})
 
 		alert("Campaign funded successfully 🎉🎉");
-	
+		getDonators()
 	} catch (error) {
 		console.error(error)
 	}
