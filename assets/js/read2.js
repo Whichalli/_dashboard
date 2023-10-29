@@ -301,12 +301,10 @@ var web3;
 var account;
 var amountRaised;
 window.onload = async ( ) => {
-    const campaigns = document.querySelector("#campaigns");
-	const openIGO = document.querySelector("#openIGO");
+    const upcomingCampaigns = document.querySelector("#campaigns");
 	const past = document.querySelector(".past-igo");
 
-    campaigns.innerHTML = "";
-	openIGO.innerHTML = "";
+    upcomingCampaigns.innerHTML = "";
     web3 = new Web3 (window.ethereum)
    let accounts = await connectWallet()
     account = accounts[0]
@@ -326,56 +324,7 @@ window.onload = async ( ) => {
         
 //    //calculate timeOut
     deadline = await calculateTimeStamp(_deadline)
-        campaigns.innerHTML += `
-               <div class="col-lg-4 col-md-6">
-                                <div class="project-shape-item hover-shape-border">
-                                    <div class="project-item ">
-                                        <div class="project-info">
-                                            <a href="${i}-project-details.html"><img src="${img}" alt="Explore-Image" /></a>
-                                            <div class="project-auother">
-                                                <h4 class="mb-10"><a href="${i}-project-details.html">${title}</a></h4>
-                                                <div class="dsc">PRICE (ENSC) = 0.001282 USD</div>
-                                            </div>
-                                        </div>
-                                        <div class="project-content">
-                                            <div class="project-header d-flex justify-content-between">
-                                                <div class="heading-title">
-                                                    <h4 >${deadline}</h4>
-                                                </div>
-                                                <div class="project-icon">
-                                                    <img src="assets/images/project/project-single-image4.png" alt="Project-Image" />
-                                                </div>
-                                            </div>
-                                            <div class="project-media">
-                                                <ul class="project-listing">
-                                                    <li>Energy Fund <span >${description}</span></li>
-                                                    <li>Min investment <span>500 USD</span></li>
-                                                    <li>Targeted raise <span >${target}</span></li>
-                                                    <li id="full-description-1">Saraswati Group of Colleges, established in 2004, offers diverse professional courses in fields like Ayurveda, Nursing, Pharmacy</li>                                                </ul>
-                                            </div>
-                                        </div>
-                                        <span class="border-shadow shadow-1"></span>
-                                        <span class="border-shadow shadow-2"></span>
-                                        <span class="border-shadow shadow-3"></span>
-                                        <span class="border-shadow shadow-4"></span>
-                                    </div>
-                                    <div class="icon-listing">            
-                                        <ul class="social-icon-list">
-                                            <li><a href="#"><i class="icon-telegram"></i></a></li>
-                                            <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                            <li><a href="#"><i class="icon-discord"></i></a></li>
-                                            <li><a href="#"><i class="icon-medium"></i></a></li>
-                                            <li><a href="#"><i class="icon-world"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <span class="border-shadow shadow-1"></span>
-                                <span class="border-shadow shadow-2"></span>
-                                <span class="border-shadow shadow-3"></span>
-                                <span class="border-shadow shadow-4"></span>
-                            </div>
-        `;
-		openIGO.innerHTML += `
+        upcomingCampaigns.innerHTML += `
                <div class="col-lg-4 col-md-6">
                                 <div class="project-shape-item hover-shape-border">
                                     <div class="project-item ">
@@ -426,6 +375,7 @@ window.onload = async ( ) => {
         `;
     }
 
+    
 	const pastIGO = await crowdFundingContract.methods.campaigns(0).call()
       let  title_ = pastIGO.title;
       let  target_ = web3.utils.fromWei(`${pastIGO.target}`, "ether");
@@ -434,55 +384,45 @@ window.onload = async ( ) => {
       let  description_ = pastIGO.description
       let  deadline_ = await calculateTimeStamp( pastIGO.deadline);
       let  amountRaised_ = web3.utils.fromWei(`${pastIGO.amountCollected}`, "ether") 
-	  past.innerHTML += `
-               <div class="col-lg-4 col-md-6">
-                                <div class="project-shape-item hover-shape-border">
-                                    <div class="project-item ">
-                                        <div class="project-info">
-                                            <a href="${0}-project-details.html"><img src="${img_}" alt="Explore-Image" /></a>
-                                            <div class="project-auother">
-                                                <h4 class="mb-10"><a href="${0}-project-details.html">${title_}</a></h4>
-                                                <div class="dsc">PRICE (ENSC) = 0.001282 USD</div>
-                                            </div>
-                                        </div>
-                                        <div class="project-content">
-                                            <div class="project-header d-flex justify-content-between">
-                                                <div class="heading-title">
-                                                    <h4 >${deadline_}</h4>
-                                                </div>
-                                                <div class="project-icon">
-                                                    <img src="assets/images/project/project-single-image4.png" alt="Project-Image" />
-                                                </div>
-                                            </div>
-                                            <div class="project-media">
-                                                <ul class="project-listing">
-                                                    <li>Energy Fund <span >${description_}</span></li>
-                                                    <li>Min investment <span>500 USD</span></li>
-                                                    <li>Targeted raise <span >${target_}</span></li>
-                                                    <li id="full-description-1">Saraswati Group of Colleges, established in 2004, offers diverse professional courses in fields like Ayurveda, Nursing, Pharmacy</li>                                                </ul>
-                                            </div>
-                                        </div>
-                                        <span class="border-shadow shadow-1"></span>
-                                        <span class="border-shadow shadow-2"></span>
-                                        <span class="border-shadow shadow-3"></span>
-                                        <span class="border-shadow shadow-4"></span>
+      let progress = ( amountRaised_ * 100 )/target_;
+    past.innerHTML += `
+     <div class="col-md-12 wow fadeInUp" data-wow-delay="0.3s" data-wow-duration="0.5s" >
+                        <div class="previous-mainmenu mb-15">
+                        </div>
+                        <a href="${0}-project-details.html">
+                            <div class="previous-item hover-shape-border hover-shape-inner">
+                                <div class="previous-gaming">
+                                    <div class="previous-image">
+                                        <img src="${img_}" alt="Previous-Image" />
                                     </div>
-                                    <div class="icon-listing">            
-                                        <ul class="social-icon-list">
-                                            <li><a href="#"><i class="icon-telegram"></i></a></li>
-                                            <li><a href="#"><i class="icon-twitter"></i></a></li>
-                                            <li><a href="#"><i class="icon-discord"></i></a></li>
-                                            <li><a href="#"><i class="icon-medium"></i></a></li>
-                                            <li><a href="#"><i class="icon-world"></i></a></li>
-                                        </ul>
+                                    <div class="previous-price">
+                                        <h4 class="mb-10">${title_}</h4>
+                                        <div class="dsc">PRICE ( ENSC ) = 0.001282 USD </div>
+                                    </div>
+                                </div>
+                                <div class="previous-chaining">
+                                    <img src="assets/images/project/previous-image.png" alt="Chain-Image" />
+                                    <span>${deadline_}</span>
+                                </div>
+                                <div class="previous-raise">
+                                    <span>${amountRaised_} ENSC (${progress.substring(0,2) }%)</span>
+                                    <div class="progress-inner">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <span class="border-shadow shadow-1"></span>
                                 <span class="border-shadow shadow-2"></span>
                                 <span class="border-shadow shadow-3"></span>
                                 <span class="border-shadow shadow-4"></span>
+                                <span class="hover-shape-bg hover_shape1"></span>
+                                <span class="hover-shape-bg hover_shape2"></span>
+                                <span class="hover-shape-bg hover_shape3"></span>
                             </div>
-        `;
+                        </a>
+                    </div>`
+     
 }
 
 const calculateTimeStamp = async ( _timestamp ) => {
