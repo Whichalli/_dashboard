@@ -231,7 +231,7 @@
                                         <th>Opens</th>
                                         <th>Closes</th>
                                     </tr>
-                                    <tr>
+                                    <tr> 
                                         <td>Fund Raise</td>
                                         <td>20.02.2022 08:00:00 UTC</td>
                                         <td>22.02.2022 24:00:00 UTC</td>
@@ -594,6 +594,30 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Section End-->
+
+        <!-- Modal Section Start-->
+        <div class="modal fade" id="fundingModal" tabindex="-1" aria-labelledby="fundingModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modals-title  mb-0" id="fundingModalLabel">Fund Campaign </h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="icon-x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-20">Please select a specify the amount of ENSC tokens you want to spend on this project. </p>
+                        <div class="connect-section">
+                            <form class="heading-list">
+                                <input type="text" class="amt" style="padding:3px; border: 2px solid #6D4AFE; font-family: 'Russo One', sans-serif; border-radius: 5px; width: 95%;" placeholder=" Min 500 ENSC">
+                                <button onclick="fund()" class="btn-area" style=" color:white; border: 2px solid rgba(57, 57, 136, 0.554); padding: 3px; font-family: 'Russo One', sans-serif;  border-radius: 5px; background: #6D4AFE; width: 95%; margin-top: 5px;"> Fund Campaign </button>
+                            </form>
                         </div>
                     </div>
                 </div>
