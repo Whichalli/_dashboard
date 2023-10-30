@@ -1197,8 +1197,9 @@ const VENDOR_ABI= [
 		"type": "receive"
 	}
 ]
+var result;
+
 window.onload = async ( ) => {
-    
 
 const projectId = document.querySelector(".projectId").value 
 const data1 = document.querySelector(".data1")
@@ -1208,13 +1209,12 @@ const data3 = document.querySelector(".t-info")
 var oracleRate;
 var ensc_price;
 
-    web3 = new Web3 (window.ethereum)
+web3 = new Web3 (window.ethereum)
 
 	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xbcfc54a3671199218d4a24d3e1ccf93697cac392");
 	oracleRate = await oracleContract.methods.USD_RATE().call()
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)
-	console.log(ensc_price, "price")
 
     crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
@@ -1222,40 +1222,49 @@ var ensc_price;
 	var target = getCampaign.target;
 	var progress = ( ( amountRaised * 100 )/target).toFixed(2);
 	var deadline = Number(getCampaign.deadline);
-	var timeleftInSecs;
-	var result;
-	  try {
-    const blockNumber = await web3.eth.getBlockNumber();
-    const block = await web3.eth.getBlock(blockNumber);
-    if (block) {
-       console.log(deadline, "deadline")
-      const timestamp = Number(block.timestamp);
-	  console.log(timestamp, "block timestamp");
-      timeleftInSecs = deadline - timestamp
-	  console.log(timeleftInSecs, "sec")
-	  let toMilliseconds = timeleftInSecs * 1000;
-	  console.log(toMilliseconds, "ms")
-	  let endDate = new Date(toMilliseconds)
-	  console.log(endDate, "ends")
+	  let endDate = new Date(deadline *1000)
 	  let now = new Date().getTime();
-	  console.log(now, "now")
-
 	  let timeLeft = endDate - now;
-	  console.log(timeLeft)
-	  //handle calculation 
-	 result =  setInterval( solveTimeout(timeLeft), 
-	 1000) 
-		console.log(result)
-	 if ( timeLeft <= 0 ){
-		clearInterval(result)
-		result = [0, 0, 0,0]
-	 }
-	}
-	}catch(e){
-		console.error(e)
-	}
-
 	
+	 
+const solveTimeout = async ( ) => {
+	
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
+    const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
+	var deadline = Number(getCampaign.deadline);
+	  let endDate = new Date(deadline *1000)
+	  let now = new Date().getTime();
+	  let timeLeft = endDate - now;
+	   // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+	if ( timeLeft <= 0 ){
+	let days_ = document.querySelector("li.days")
+	let hrs_ = document.querySelector("li.hours");
+	let mins_ = document.querySelector("li.minutes");
+	let secs_ = document.querySelector("li.seconds");
+	days_.innerHTML =0 + '<small style="font-size:14px">D</small>';
+	 hrs_.innerHTML = 0 +   '<small style="font-size:14px">H</small>';
+	 mins_.innerHTML = 0+   '<small style="font-size:14px">M </small>';
+	 secs_.innerHTML = 0 +   '<small style="font-size:14px">S</small>';
+
+	}else{
+	
+	let days_ = document.querySelector("li.days")
+	let hrs_ = document.querySelector("li.hours");
+	let mins_ = document.querySelector("li.minutes");
+	let secs_ = document.querySelector("li.seconds");
+	days_.innerHTML = days +  '<small style="font-size:14px">D</small>';
+	 hrs_.innerHTML = hours +   '<small style="font-size:14px">H </small>';
+	 mins_.innerHTML = minutes +   '<small style="font-size:14px">M</small>';
+	 secs_.innerHTML = seconds +   '<small style="font-size:14px">S</small>';
+
+	}
+}
+
+	 
     data1.innerHTML = `<div class="game-price-inner">
                         <div class="total-price">
                             <div class="price-inner d-flex mb-45">
@@ -1271,12 +1280,11 @@ var ensc_price;
                         </div>
                         <div class="allocation-max text-center">
                             <img src="assets/images/project/icon-1.png" alt="icon-image" />
-                            <div class="allocation">Allocation: 500 USD Min</div>
                         </div>
                         <div class="targeted-raise">
                             <div class="all-raise mb-10">Fund Ends In</div>
                             <div class="price-counter mb-48">
-                                <div class="timer timer_1">
+                                <div class="timer timer">
                                     <ul> 
                                         <li class="days"></li>
                                         <li class="hours"></li>
@@ -1335,7 +1343,6 @@ var ensc_price;
                             <div class="project-content">
                                 <div class="project-media">
                                     <ul class="project-listing">
-                                        <li>Minimum Investment <span>20 ENSC</span></li>
                                         <li>Address <span><img src="assets/images/project/icon.png" alt="project"/>${getCampaign.owner}</span></li>
                                         <li>Energy Fund type <span>Utility Scale Solar Farm</span></li>
                                         <li>CO2 Emissions(Kgs/Year) <span>492075</span></li>
@@ -1362,7 +1369,6 @@ var ensc_price;
                         </div>`
 
 	const getDonators = await crowdFundingContract.methods.getDonators(projectId).call();
-	console.log(getDonators)
 
 let donators = document.querySelector("ul.donators");
 
@@ -1385,18 +1391,8 @@ addresses.forEach((address, index) => {
     donators.appendChild(listItem);
 });
 
-}
 
-const solveTimeout = ( timeLeft ) => {
-	   // Calculate days, hours, minutes, and seconds
-    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-	console.log(seconds, "sec")
-	console.log(days, "days")
-    return ( new Array( days, hours, minutes, seconds) )
-}
+
 const fund = async (  ) => {
     console.log();
     let input = document.querySelector(".amt").value;
@@ -1421,4 +1417,13 @@ const fund = async (  ) => {
 	} catch (error) {
 		console.error(error)
 	}
+}
+
+
+	 setInterval( () => { solveTimeout() }, 1000)
+	  
+	 if ( timeLeft <= 0 ){
+		clearInterval(solveTimeout)
+		result = ( {days:0, hours: 0, minutes: 0, seconds : 0 } )
+	 }
 }

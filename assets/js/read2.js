@@ -910,7 +910,6 @@ window.onload = async ( ) => {
                                             <div class="project-media">
                                                 <ul class="project-listing">
                                                     <li>Energy Fund <span >${description}</span></li>
-                                                    <li>Min investment <span>500 USD</span></li>
                                                     <li>Targeted raise <span >${target}</span></li>
                                                     <li id="full-description-1">Saraswati Group of Colleges, established in 2004, offers diverse professional courses in fields like Ayurveda, Nursing, Pharmacy</li>                                                </ul>
                                             </div>
