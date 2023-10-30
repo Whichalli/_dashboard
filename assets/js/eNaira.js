@@ -927,7 +927,7 @@ var bnb_ngn;
 var usdt_ngn;
 var encodedABI;
 var to_eNaira = false;
-
+const loader = document.querySelector(".loader_first")
 const fromTop = document.querySelector(".fromTop");
 
  const _setAmount = ( e ) => {
@@ -958,7 +958,7 @@ fromTop.innerHTML = `    <form class="form box smallbox">
 const updateTo_eNaira = ( ) => {
     console.log(to_eNaira)
     to_eNaira = !to_eNaira;
-    to_eNaira ? fromTop.innerHTML = `     <form class="form box smallbox">
+    to_eNaira ? fromTop.innerHTML = `  <form class="form box smallbox">
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
                         <input id="amountIn" onkeyup="_setAmount()"  type="text" class="mt-3 input is-info" placeholder="amount in" required/>
                         <input id="eNairaID" onkeyup="_setEnairaWalletID()" type="text" class="mt-3 input is-info" placeholder="eNaira Wallet ID" required/>
@@ -994,7 +994,7 @@ const form = document.querySelector("form");
 
 form.onsubmit = async ( e ) => {
     e.preventDefault();
-    console.log(beneficiary)
+   loader.style.display = "flex" 
    await  fetchPrices()
 	const fee = Number(amount) * 0.01;
     console.log(fee, "fee")
@@ -1041,6 +1041,7 @@ form.onsubmit = async ( e ) => {
     TOTAL = Math.round(parseFloat(TX_FEE_TO_NGN) + parseFloat(amount));
     console.log(TOTAL, "total")
    //proceed to payment gateway
+   loader.style.display = "none" 
     proceed()
     } else {
         beneficiary = ""
@@ -1050,48 +1051,48 @@ fetchPrices();
 }
 
 //beneficiary:0x9c6c3180d81C9649E931eA932aDE739E6C8250d9
-// const  proceed = async () => {
-//        let Random = parseInt(Math.random() * 1000)
-//         FlutterwaveCheckout({
-//             public_key: "FLWPUBK_TEST-cd94ba5d8645e63dfcfa7ddc95de6f19-X",
-//             tx_ref: `ENSC-${Random}Token`,
-//             amount: TOTAL,
-//             currency: "NGN",
-//             payment_options: "card, mobilemoneyghana, ussd,enaira",
-//             callback: function (payment) {
-//                 // Send AJAX verification request to backend
-//                 verifyTransactionOnBackend(payment);
-//             },
-//             onclose: function (incomplete) {
-//                 if (incomplete || window.verified === false) {
-//                     console.error("payment failed")
-//                 } else {
-//                    console.warn("payment failed")
-//                 }
-//             },
-//             meta: {
-//                 consumer_id: beneficiary,
-//                 consumer_mac: "92a3-912ba-1192a",
-//             },
-//             customer: {
-//                 email: "rose@unsinkableship.com",
-//                 phone_number: "08102909304",
-//                 name: "Rose DeWitt Bukater",
-//             },
-//             customizations: {
-//                 title: "ENSC ENERGY",
-//                 description: "Payment ENSC Token",
-//                 logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
-//             },
-//         });
+const  proceed = async () => {
+       let Random = parseInt(Math.random() * 1000)
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-cd94ba5d8645e63dfcfa7ddc95de6f19-X",
+            tx_ref: `ENSC-${Random}Token`,
+            amount: TOTAL,
+            currency: "NGN",
+            payment_options: "card, mobilemoneyghana, ussd,enaira",
+            callback: function (payment) {
+                // Send AJAX verification request to backend
+                verifyTransactionOnBackend(payment);
+            },
+            onclose: function (incomplete) {
+                if (incomplete || window.verified === false) {
+                    console.error("payment failed")
+                } else {
+                   console.warn("payment failed")
+                }
+            },
+            meta: {
+                consumer_id: beneficiary,
+                consumer_mac: "92a3-912ba-1192a",
+            },
+            customer: {
+                email: "rose@unsinkableship.com",
+                phone_number: "08102909304",
+                name: "Rose DeWitt Bukater",
+            },
+            customizations: {
+                title: "ENSC ENERGY",
+                description: "Payment ENSC Token",
+                logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+            },
+        });
 
-//     }
+    }
 
-const proceed = () => { verifyTransactionOnBackend ( {status:"successful"}) }
+// const proceed = () => { verifyTransactionOnBackend ( {status:"successful"}) }
 const  verifyTransactionOnBackend = async (transaction) => {
-
         if (transaction.status == "successful") {
             // TRANSACTION CREATION
+			loader.style.display = "flex" 
             const tx = {
                 from: beneficiary,
                 to: vendorCA,
@@ -1102,7 +1103,6 @@ const  verifyTransactionOnBackend = async (transaction) => {
                 maxPriorityFeePerGas: '0x3b9aca00',
                 maxFeePerGas: '0x2540be400'
             };
-
             // Sign and send the transaction
             web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
                 .then((signedTx) => {
@@ -1111,20 +1111,27 @@ const  verifyTransactionOnBackend = async (transaction) => {
                     web3.eth.sendSignedTransaction(signedTx.rawTransaction)
                         .on('receipt', (receipt) => {
                             console.log('Transaction receipt:', receipt);
+							loader.style.display = "none" 
                             alert("Transaction successful 🎉");
                         })
                         .on('error', (error) => {
                             console.error('Transaction error:', error);
+							loader.style.display = "none" 
+							alert("Transaction Failed ❌")
                         });
                 })
                 .catch((error) => {
                     console.error('Transaction signing error:', error);
+					loader.style.display = "none";
+					alert("Transction Failed ❌") 
                 });
         }
     }  
+
 var account;
 var _bep20Contract;
 const verifyBeneficiaryBankAcct = async ( ) => {
+	loader.style.display = "flex" 
     try {
 const accounts = await connectWallet()
 account = accounts[0];
@@ -1141,9 +1148,10 @@ web3 = new Web3(window.ethereum)
         console.log(amountIn, "present withdrawal");
         console.log(tokenBal - amountIn, "withdrawble left");
         if( Number(amountIn) > Number(tokenBal)){
-            return (console.error("Why are you trying to withdraw more than you own?"))
+			loader.style.display = "none" 
+            return (alert("You are trying to withdraw more than you own?"))
         }else{
-            // exchange_ensc_for_eNaira()
+          
         try{
 
     const response = await fetch('https://api.flutterwave.com/v3/accounts/resolve', {
@@ -1164,6 +1172,7 @@ web3 = new Web3(window.ethereum)
       const  beneficiary_name = responseData.data.account_name;
       const reference =  `TX${account}${ Math.round(Math.random() *1000 ) }`
     //   console.log(reference)
+	loader.style.display = "none" 
       let confirmation = confirm( `are you ${beneficiary_name} ?`);
       if (confirmation) {
         initBankTransfer( { 
@@ -1185,9 +1194,7 @@ web3 = new Web3(window.ethereum)
 }
 
 const initBankTransfer = async ( details ) => {
-    console.log("Initiating bank transfer");
-    console.log("Initiating new bank transfer, payload: ", details);
-    
+    loader.style.display = "flex" 
     const res = await fetch('https://api.flutterwave.com/v3/transfers', {
       method: 'POST',
       headers: {
@@ -1208,17 +1215,19 @@ const initBankTransfer = async ( details ) => {
       console.log(response)
       if(response.status == "success"){
         exchange_ensc_for_eNaira(  )
-      }
+      }else{
+		loader.style.display = "none" 
+		alert("Transfer Failed ❌")
+	  }
 }
 
 const exchange_ensc_for_eNaira = async ( ) => {
-    console.log("exchanging...")
+	loader.style.display = "flex" 
     let  __fee = amount * 0.01;
     let  __amountOut = amount - __fee
     let _fee = web3.utils.toWei(`${__fee}`, 'ether');
     let _amountOut = web3.utils.toWei(`${__amountOut}`, "ether");
     let _amountIn = web3.utils.toWei(`${amount}`, "ether");
-    console.log(_amountIn, "in")
     let payload = contract.methods.Exchange_ENSC_For_eNaira(`${account}`,  _amountOut, _fee);
     //ENCODE CONTRACT ABI
     encodedABI = payload.encodeABI()
@@ -1244,7 +1253,6 @@ const exchange_ensc_for_eNaira = async ( ) => {
         console.log(gasPrice, "price")
     })
 
-console.log(nonce, "nonce")
                 // TRANSACTION CREATION
             const tx = {
                 from: sender,
@@ -1256,7 +1264,6 @@ console.log(nonce, "nonce")
                 maxPriorityFeePerGas: '0x3b9aca00',
                 maxFeePerGas: '0x2540be400'
             };
-            console.log("proceeding to request approval")
         seekApproval(tx, _amountIn);
         }
 
@@ -1265,8 +1272,9 @@ console.log(nonce, "nonce")
    await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from: account
    })
-   console.log("approved")
+   loader.style.display = "none" 
     // Sign and send the transaction
+	loader.style.display = "flex" 
             web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
                 .then((signedTx) => {
                     console.log( "Transaction Hash", signedTx.rawTransaction)
@@ -1275,13 +1283,19 @@ console.log(nonce, "nonce")
                         .on('receipt', (receipt) => {
                             console.log('Transaction receipt:', receipt);
                             receipt = receipt.transactionHash;
+							loader.style.display = "none"
+							alert("Transaction successful 🎉🎉") 
                         })
                         .on('error', (error) => {
                             console.error('Transaction error:', error);
+							loader.style.display = "none" 
+							alert("Transaction Failed ❌")
                         });
                 })
                 .catch((error) => {
                     console.error('Transaction signing error:', error);
+					loader.style.display = "none"
+					alert("Transaction Failed ❌")
                 });
 }
    

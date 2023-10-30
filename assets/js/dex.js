@@ -1302,6 +1302,7 @@ const bal = document.querySelector(".bal")
 var logo1 = document.querySelector("#logo1")
 const connectBtn  = document.querySelector("#connect")
 const form = document.querySelector("form")
+const loader = document.querySelector(".loader_first")
  var fee;
  var _fee;
  var txFee;
@@ -1386,7 +1387,7 @@ const fetchBal = async ( _contractAddress ) => {
 form.onsubmit = async ( e ) => {
 	 e.preventDefault();
 	  let tokenInSymbol = tokenIn.symbol;
-	  
+	   
 	  switch (tokenInSymbol) {
 		case "USDT":
 			try {
@@ -1398,18 +1399,20 @@ form.onsubmit = async ( e ) => {
         ensc_vendor_contract = new _web3.eth.Contract(_VENDOR_ABI, vendorCA)
 		     //check if _amountOut is valid number
 			 if ( _amountOut !== null ){
+				loader.style.display = "flex" 
 			//check allowance level
 			let allowance = await _contract.methods.allowance(Address, vendorCA).call();
-			console.log(allowance)
-			if ( Number(allowance) >= _amountIn ){
-				//increase allowance
-				// await _contract.methods.increaseAllowance(_ensc_vendor_contractAddress, _amountIn).send({from:Address})
+			loader.style.display = "none" 
+			if ( Number(allowance) >= Number(_amountIn) ){
 				//procced with exchange
+				loader.style.display = "flex" 
 			await ensc_vendor_contract.methods.Exchange_For_ENSC ( _tokenIn, _amountIn, _amountOut, txFee ).send({
 				from: Address
 			});
+			loader.style.display = "none" 
 				fetchBal(enscCA)
 			}else {
+				loader.style.display = "flex" 
 			//seek approval to spend amountIn from user balance
 			await _contract.methods.approve(vendorCA, _amountIn).send({
 				from: Address
@@ -1419,13 +1422,19 @@ form.onsubmit = async ( e ) => {
 			await ensc_vendor_contract.methods.Exchange_For_ENSC ( _tokenIn, _amountIn, _amountOut, txFee ).send({
 				from: Address
 			});
+			loader.style.display = "none" 
 				fetchBal(enscCA)
+				alert("Transaction  successful 🎉🎉")
 		 }
 		
 			 }else{
-				console.warn("calulating amount out.")
+				
+				loader.style.display = "none" 
+				alert("calulating amount out.")
 			 }
 			} catch (error) {
+				loader.style.display = "none" 
+				alert("Transaction Failed ❌")
 				console.error(error.message);
 			}
 			break;
@@ -1439,19 +1448,22 @@ form.onsubmit = async ( e ) => {
             ensc_vendor_contract = new _web3.eth.Contract(_VENDOR_ABI, vendorCA)
             ensc_contract = new _web3.eth.Contract(ERC20ABI, enscCA)
 			 if ( _amountOut !== null ){
+				loader.style.display = "flex" 
 			//check allowance
 			let allowance = await ensc_contract.methods.allowance(Address, enscCA).call()
-			if(allowance >= _amountIn ){
-			console.log(allowance, "allowance")
+			if( Number(allowance) >= Number(_amountIn) ){
+			
 				//proceed to swapping
 				await ensc_vendor_contract.methods.Exchange_From_ENSC ( _tokenOut, _amountIn, _amountOut, txFee  ).send({
 				from: Address
 			 })
-
+			 loader.style.display = "none" 
 			 fetchBal(usdt_contractAddress)
+			 alert("Transaction successful 🎉🎉")
 			}else{
 		     //check if _amountOut is valid number
 		    //seek permision to spend ENSC balance of msg.sender	
+			loader.style.display = "flex" 
 			await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from:Address
 			})
@@ -1462,14 +1474,16 @@ form.onsubmit = async ( e ) => {
 			await ensc_vendor_contract.methods.Exchange_From_ENSC ( _tokenOut, _amountIn, _amountOut, txFee ).send({
 				from: Address
 			 })
-
+			 loader.style.display = "none" 
 			 fetchBal(usdt_contractAddress)
+			 alert("Transaction successful 🎉🎉")
 			}
 			 }else{
-				console.warn("calulating amount out.")
+				alert("calulating amount out.")
 			 }
 			} catch (error) {
 				console.error(error.message);
+				alert("Transaction Failed ❌")
 			}
 			break;
 		default:
