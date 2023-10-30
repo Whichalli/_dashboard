@@ -931,14 +931,16 @@ const loader = document.querySelector(".loader_first")
 const fromTop = document.querySelector(".fromTop");
 
  const _setAmount = (  ) => {
-const amt = document.querySelector("#amountIn")
-        amount = amt.value
+    amount = document.querySelector("#amountIn").value
+ }
+ const _setBeneficiary = (  ) => {
+ beneficiary = document.querySelector("#beneficiary").value;  
  }
 
 const _setEnairaWalletID = () => {
-const _eNairaID = document.querySelector("#eNairaID");
-    eNairaWalletID = _eNairaID.value
+ eNairaWalletID = document.querySelector("#eNairaID").value
 }
+
 fromTop.innerHTML = `    <form class="form box smallbox">
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
                         <input id="amountIn" onkeyup="_setAmount()"  type="text" class="mt-3 input is-info" placeholder="amount in" required/>
@@ -983,7 +985,7 @@ const fetchPrices = async () => {
 }
 
 const _error = ( msg ) => {
-    console.log(msg)
+    console.error(msg)
 }
 
 const form = document.querySelector("form");
@@ -1014,7 +1016,6 @@ form.onsubmit = async ( e ) => {
 
     await web3.eth.getTransactionCount(sender, 'latest').then(_nonce =>{
         nonce = _nonce 
-        console.log(nonce, "nonce")
     })
     //check gas price or txcost
     await web3.eth.estimateGas({ transaction }).then(async (_gas) => {
@@ -1028,11 +1029,8 @@ form.onsubmit = async ( e ) => {
      let  _toString = gasFee.toString();
      console.log(gasFee, "gasfee", _toString, "toString")
     let to1e18 = web3.utils.fromWei(_toString, "ether")
-    console.log(to1e18 , "e18")
     let TX_FEE_TO_NGN = to1e18 * bnb_ngn;
-    console.log(TX_FEE_TO_NGN, "tx fee")
     TOTAL = Math.round(parseFloat(TX_FEE_TO_NGN) + parseFloat(amount));
-    console.log(TOTAL, "total")
    //proceed to payment gateway
    loader.style.display = "none" 
     proceed()

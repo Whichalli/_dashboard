@@ -1392,9 +1392,8 @@ addresses.forEach((address, index) => {
 });
 
 
-
-const fund = async (  ) => {
-    console.log();
+const fundMarkup = document.querySelector(".fundProject");
+fundMarkup.onclick = async (  ) => {
     let input = document.querySelector(".amt").value;
     const projectId = document.querySelector(".projectId").value 
 	try {
