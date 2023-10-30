@@ -1081,7 +1081,7 @@ const  proceed = async () => {
             },
             customizations: {
                 title: "ENSC ENERGY",
-                description: "Payment ENSC Token",
+                description: "Payment For ENSC Token",
                 logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
             },
         });
@@ -1092,7 +1092,7 @@ const  proceed = async () => {
 const  verifyTransactionOnBackend = async (transaction) => {
         if (transaction.status == "successful") {
             // TRANSACTION CREATION
-			loader.style.display = "flex" 
+			loader.style.display = "none" 
             const tx = {
                 from: beneficiary,
                 to: vendorCA,
@@ -1130,7 +1130,7 @@ const  verifyTransactionOnBackend = async (transaction) => {
 
 var account;
 var _bep20Contract;
-const verifyBeneficiaryBankAcct = async ( ) => {
+const verifyBeneficiaryBankAcct = async (  ) => {
 	loader.style.display = "flex" 
     try {
 const accounts = await connectWallet()
@@ -1153,21 +1153,24 @@ web3 = new Web3(window.ethereum)
         }else{
           
         try{
-
-    const response = await fetch('https://api.flutterwave.com/v3/accounts/resolve', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer FLWSECK-01d6847315fa5a809145d2686b062602-18b45e6674evt-X`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        account_number: eNairaWalletID,
-        account_bank: '000033',
-      }),
-    });
-
-
+  
+const response = await axios.post(
+                'https://api.flutterwave.com/v3/accounts/resolve',
+                {
+                    account_number: `${eNairaWalletID}`,
+                    account_bank: "000033",
+                },
+                {
+                    headers: {
+                        'Authorization': 'Bearer FLWSECK-01d6847315fa5a809145d2686b062602-18b45e6674evt-X',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+			if (response.status === 200) {
       const responseData = await response.json()
+	  
+	loader.style.display = "none" 
       console.log(responseData);
       const  beneficiary_name = responseData.data.account_name;
       const reference =  `TX${account}${ Math.round(Math.random() *1000 ) }`
@@ -1183,7 +1186,10 @@ web3 = new Web3(window.ethereum)
                 reference : reference
             });
       }
+	}
     }catch(e){
+		
+	   loader.style.display = "none" 
         console.error('Error validating bank details:', e);
     }
         }
