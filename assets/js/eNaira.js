@@ -930,19 +930,14 @@ var to_eNaira = false;
 const loader = document.querySelector(".loader_first")
 const fromTop = document.querySelector(".fromTop");
 
- const _setAmount = ( e ) => {
+ const _setAmount = (  ) => {
 const amt = document.querySelector("#amountIn")
         amount = amt.value
-        console.log(amount)
  }
- const _setBeneficiary = ( e ) => {
-const _beneficiary = document.querySelector("#beneficiary")
-    beneficiary = _beneficiary.value
- } 
-const _setEnairaWalletID = (e) => {
+
+const _setEnairaWalletID = () => {
 const _eNairaID = document.querySelector("#eNairaID");
     eNairaWalletID = _eNairaID.value
-    console.log(eNairaWalletID)
 }
 fromTop.innerHTML = `    <form class="form box smallbox">
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
@@ -1010,7 +1005,6 @@ form.onsubmit = async ( e ) => {
      let query = contract.methods.Exachange_eNaira_For_ENSC(`${beneficiary}`,_amountOut, _fee);
     //ENCODE CONTRACT ABI
     encodedABI = query.encodeABI()
-        console.log(beneficiary, _amountOut, _fee );
     const transaction = {
         from: sender,
         to: vendorCA,
@@ -1025,11 +1019,9 @@ form.onsubmit = async ( e ) => {
     //check gas price or txcost
     await web3.eth.estimateGas({ transaction }).then(async (_gas) => {
        gas = _gas;
-        console.log(gas, "gas")
     });
     await web3.eth.getGasPrice().then(async (price) => {
         gasPrice = price;
-        console.log(gasPrice, "price")
     })
 
     var gasFee = gas * gasPrice;
@@ -1131,23 +1123,20 @@ const  verifyTransactionOnBackend = async (transaction) => {
 
 var account;
 var _bep20Contract;
+
 const verifyBeneficiaryBankAcct = async (  ) => {
 	loader.style.display = "flex" 
     try {
-const accounts = await connectWallet()
-account = accounts[0];
-console.log(account)
-web3 = new Web3(window.ethereum)
- _bep20Contract = (ContractAddress) => {
+	const accounts = await connectWallet()
+	account = accounts[0];
+	
+	web3 = new Web3(window.ethereum)
+	_bep20Contract = (ContractAddress) => {
     return new web3.eth.Contract(BEP20ABI, ContractAddress);
 }
-        console.log("verifying....");
         const _contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273");
         const tokenBal = await _contract.methods.balanceOf(account).call()
-        console.log(tokenBal, "token bal")
        let amountIn = web3.utils.toWei(`${amount}`, 'ether');
-        console.log(amountIn, "present withdrawal");
-        console.log(tokenBal - amountIn, "withdrawble left");
         if( Number(amountIn) > Number(tokenBal)){
 			loader.style.display = "none" 
             return (alert("You are trying to withdraw more than you own?"))
@@ -1169,11 +1158,8 @@ web3 = new Web3(window.ethereum)
                 }
             );
 
-			console.log(response)
-      const responseData = await response.data.data
-	  console.log(responseData)
+    const responseData = await response.data.data
 	loader.style.display = "none" 
-      console.log(responseData);
       const  beneficiary_name = responseData.account_name;
       const reference =  `TX${account}${ Math.round(Math.random() *1000 ) }`
     //   console.log(reference)
@@ -1254,61 +1240,49 @@ const exchange_ensc_for_eNaira = async ( ) => {
 
     await web3.eth.getTransactionCount(sender, 'latest').then(_nonce =>{
         nonce = _nonce 
-        console.log(nonce, "nonce")
     })
     //check gas price or txcost
     await web3.eth.estimateGas({ transaction }).then(async (_gas) => {
        gas = _gas;
-        console.log(gas, "gas")
     });
     await web3.eth.getGasPrice().then(async (price) => {
         gasPrice = price;
-        console.log(gasPrice, "price")
     })
 
                 // TRANSACTION CREATION
-            const tx = {
+            const _tx = {
                 from: sender,
                 to: vendorCA,
                 data: encodedABI,
                 gas: gas,
-                nonce: nonce+=1,
+                nonce: nonce+1,
                 gasLimit: 100000,
                 maxPriorityFeePerGas: '0x3b9aca00',
                 maxFeePerGas: '0x2540be400'
-            };
-        seekApproval(tx, _amountIn);
+            }; 
+			 const tx = {
+                from: sender,
+                to: vendorCA,
+                data: encodedABI,
+                gas: gas,
+                nonce: nonce,
+                gasLimit: 100000,
+                maxPriorityFeePerGas: '0x3b9aca00',
+                maxFeePerGas: '0x2540be400'
+            }; 
+			let ensc_contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273")
+			let allowance = await ensc_contract.methods.allowance(vendorCA, account).call();
+			console.log(allowance)
+			if ( Number(allowance) >= Number(_amountIn)){
+					SignTransaction(tx, _amountIn)
+			}else{
+					seekApprovalAndSignTransaction(_tx, _amountIn)
+			}
         }
 
-  const seekApproval = async (tx, _amountIn) => {
-	
+  const seekApprovalAndSignTransaction = async (tx, _amountIn) => {
    let ensc_contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273")
-	let allowance = await ensc_contract.methods.allowance(account, vendorCA).call();
-	if ( Number(allowance) >= Number(_amountIn)) {
-		     web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
-                .then((signedTx) => {
-                    console.log( "Transaction Hash", signedTx.rawTransaction)
-                    
-                    web3.eth.sendSignedTransaction(signedTx.rawTransaction)
-                        .on('receipt', (receipt) => {
-                            console.log('Transaction receipt:', receipt);
-                            receipt = receipt.transactionHash;
-							loader.style.display = "none"
-							alert("Transaction successful 🎉🎉") 
-                        })
-                        .on('error', (error) => {
-                            console.error('Transaction error:', error);
-							loader.style.display = "none" 
-							alert("Transaction Failed ❌")
-                        });
-                })
-                .catch((error) => {
-                    console.error('Transaction signing error:', error);
-					loader.style.display = "none"
-					alert("Transaction Failed ❌")
-                });
-	}else{
-		
+   
    await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from: account
    })
@@ -1338,4 +1312,33 @@ const exchange_ensc_for_eNaira = async ( ) => {
 					alert("Transaction Failed ❌")
                 });
 }
+   
+ const SignTransaction = async (tx, _amountIn) => {
+   
+   loader.style.display = "none" 
+    // Sign and send the transaction
+	loader.style.display = "flex" 
+            web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
+                .then((signedTx) => {
+                    console.log( "Transaction Hash", signedTx.rawTransaction)
+                    
+                    web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                        .on('receipt', (receipt) => {
+                            console.log('Transaction receipt:', receipt);
+                            receipt = receipt.transactionHash;
+							loader.style.display = "none"
+							alert("Transaction successful 🎉🎉") 
+                        })
+                        .on('error', (error) => {
+                            console.error('Transaction error:', error);
+							loader.style.display = "none" 
+							alert("Transaction Failed ❌")
+                        });
+                })
+                .catch((error) => {
+                    console.error('Transaction signing error:', error);
+					loader.style.display = "none"
+					alert("Transaction Failed ❌")
+                });
 }
+ 
