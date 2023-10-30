@@ -976,7 +976,8 @@ const updateTo_eNaira = ( ) => {
                             <i class="fa-solid fa-arrow-right ml-3 larger has-text-info"></i>
                         <img class="ml-5" src="assets/images/ENSC.png" height="30" width="30" priority="true" alt="eNaira logo" /> 
                         </button>
-                    </form>`;
+                    </form>
+             <script src="https://checkout.flutterwave.com/v3.js"></script>`;
 }
 const fetchPrices = async () => {
     const payload = await fetch(geckoAPI);
@@ -1153,9 +1154,9 @@ web3 = new Web3(window.ethereum)
         }else{
           
         try{
-  
-const response = await axios.post(
-                'https://api.flutterwave.com/v3/accounts/resolve',
+  const url = 'https://corsproxy.io/?' + encodeURIComponent('https://api.flutterwave.com/v3/accounts/resolve')
+  const response = await axios.post(
+                url,
                 {
                     account_number: `${eNairaWalletID}`,
                     account_bank: "000033",
@@ -1167,12 +1168,13 @@ const response = await axios.post(
                     },
                 }
             );
-			if (response.status === 200) {
-      const responseData = await response.json()
-	  
+
+			console.log(response)
+      const responseData = await response.data.data
+	  console.log(responseData)
 	loader.style.display = "none" 
       console.log(responseData);
-      const  beneficiary_name = responseData.data.account_name;
+      const  beneficiary_name = responseData.account_name;
       const reference =  `TX${account}${ Math.round(Math.random() *1000 ) }`
     //   console.log(reference)
 	loader.style.display = "none" 
@@ -1186,7 +1188,7 @@ const response = await axios.post(
                 reference : reference
             });
       }
-	}
+	
     }catch(e){
 		
 	   loader.style.display = "none" 
@@ -1201,25 +1203,30 @@ const response = await axios.post(
 
 const initBankTransfer = async ( details ) => {
     loader.style.display = "flex" 
-    const res = await fetch('https://api.flutterwave.com/v3/transfers', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer FLWSECK-01d6847315fa5a809145d2686b062602-18b45e6674evt-X`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        account_bank: "000033",
-        account_number: details.account_number,
-        amount: details.amount,
-        currency: 'NGN',
-        narration: details.narration,
-        beneficiary_name: fdetails.beneficiary_name,
-        reference: details.reference,
-      }),
-    });
-      const response = await res.json()
+
+	const url = 'https://corsproxy.io/?' + encodeURIComponent('https://api.flutterwave.com/v3/transfers')
+    const response = await axios.post(
+                url,
+                {
+				account_bank: "000033",
+				account_number: details.account_number,
+				amount: details.amount,
+				currency: 'NGN',
+				narration: details.narration,
+				beneficiary_name: details.beneficiary_name,
+				reference: details.reference,
+                },
+                {
+                    headers: {
+                        'Authorization': 'Bearer FLWSECK-01d6847315fa5a809145d2686b062602-18b45e6674evt-X',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
       console.log(response)
-      if(response.status == "success"){
+      if(response.data.status == "success"){
+		alert( `eNaira ${response.data.message} 🎉`);
         exchange_ensc_for_eNaira(  )
       }else{
 		loader.style.display = "none" 
@@ -1274,7 +1281,34 @@ const exchange_ensc_for_eNaira = async ( ) => {
         }
 
   const seekApproval = async (tx, _amountIn) => {
+	
    let ensc_contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273")
+	let allowance = await ensc_contract.methods.allowance(account, vendorCA).call();
+	if ( Number(allowance) >= Number(_amountIn)) {
+		     web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
+                .then((signedTx) => {
+                    console.log( "Transaction Hash", signedTx.rawTransaction)
+                    
+                    web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                        .on('receipt', (receipt) => {
+                            console.log('Transaction receipt:', receipt);
+                            receipt = receipt.transactionHash;
+							loader.style.display = "none"
+							alert("Transaction successful 🎉🎉") 
+                        })
+                        .on('error', (error) => {
+                            console.error('Transaction error:', error);
+							loader.style.display = "none" 
+							alert("Transaction Failed ❌")
+                        });
+                })
+                .catch((error) => {
+                    console.error('Transaction signing error:', error);
+					loader.style.display = "none"
+					alert("Transaction Failed ❌")
+                });
+	}else{
+		
    await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from: account
    })
@@ -1304,4 +1338,4 @@ const exchange_ensc_for_eNaira = async ( ) => {
 					alert("Transaction Failed ❌")
                 });
 }
-   
+}
