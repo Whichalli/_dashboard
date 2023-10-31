@@ -318,7 +318,7 @@ console.log(owner, description, target, deadline, image)
 		let accounts = await connectWallet()
 		account = accounts[0]
 		let web3 = new Web3(window.ethereum)
-		const contract =  new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
+		const contract =  new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
 		let targetInWei = web3.utils.toWei(`${target}`, "ether")
 			
 		const creation = await contract.methods.createCampaign(`${owner}`, `${title}`,`${description}`, `${targetInWei}`, `${deadline}`, `${image}`).send({

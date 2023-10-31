@@ -865,8 +865,8 @@ window.onload = async ( ) => {
    let accounts = await connectWallet()
     account = accounts[0]
 
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
-	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xbcfc54a3671199218d4a24d3e1ccf93697cac392");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
+	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6");
 	oracleRate = await oracleContract.methods.USD_RATE().call()
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)

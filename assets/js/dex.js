@@ -1289,7 +1289,7 @@ const whitelistedTokens = [
 const usdc_contractAddress = "0x64544969ed7EBf5f083679233325356EbE738930";
 const usdt_contractAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
 const ensc_contractAddress = "0x1E3c63162310e116ab8278a8D522817d8D4c0635";
-const _ensc_vendor_contractAddress = "0x6C3Cc80834530f661373A7a2447861c1B5A31731";
+const _ensc_vendor_contractAddress = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6";
 //0x5c0be7e91E596b4e4187eAd554A2cE865a24FB41
 //0x1E3c63162310e116ab8278a8D522817d8D4c0635 token
 const findButton = document.querySelector(".find");

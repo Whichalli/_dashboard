@@ -863,17 +863,59 @@ window.onload = async ( ) => {
 
     campaigns.innerHTML = "";
 	openIGO.innerHTML = "";
+	past.innerHTML = "";
     web3 = new Web3 (window.ethereum)
    let accounts = await connectWallet()
     account = accounts[0]
 
-	let oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xbcfc54a3671199218d4a24d3e1ccf93697cac392");
+	
+const calculateTimeStamp = async ( _timestamp ) => {
+     try {
+    const blockNumber = await web3.eth.getBlockNumber();
+    const block = await web3.eth.getBlock(blockNumber);
+    if (block) {
+
+      const timestamp = block.timestamp;
+
+      let timeleftInSecs = Number(_timestamp) - Number(timestamp)
+
+      let timeleftInMins = timeleftInSecs/60
+
+      let timeleftInHrs = timeleftInSecs/3600
+
+      let timeleftInDays = timeleftInHrs/24
+
+      if ( timeleftInDays >= 1 ){
+         return Math.round(timeleftInDays) + " Days Left";
+      }
+      else if ( timeleftInHrs >= 1 ) {
+         return Math.round(timeleftInHrs) + " Hours Left";
+      }
+      else if ( timeleftInMins >= 1 ) {
+        return Math.round(timeleftInMins) + " Mins Left";
+      }else if( timeleftInSecs >= 1 ){
+        return (  Math.round( timeleftInSecs ) + " Secs Left")
+      }else{
+        return "Just concluded";
+      }
+     
+    } else {
+      console.error(`Block ${blockNumber} not found`);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error occurred while fetching current block timestamp:', error);
+    throw error;
+  }
+}
+
+	let oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6");
 	oracleRate = await oracleContract.methods.USD_RATE().call()
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)
 	console.log(ensc_price, "price")
 
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
     const numberOfCampaigns = await crowdFundingContract.methods.numberOfCampaigns().call()
     for ( i =1; i < Number(numberOfCampaigns); i++ ){    
        
@@ -986,6 +1028,7 @@ window.onload = async ( ) => {
         `;
     }
 
+	// for ( i = 0; i < Number(numberOfCampaigns) -1; i++ ){
 	const pastIGO = await crowdFundingContract.methods.campaigns(0).call()
       let  title_ = pastIGO.title;
       let  target_ = web3.utils.fromWei(`${pastIGO.target}`, "ether");
@@ -1042,44 +1085,7 @@ window.onload = async ( ) => {
                                 <span class="border-shadow shadow-4"></span>
                             </div>
         `;
-}
+// }
 
-const calculateTimeStamp = async ( _timestamp ) => {
-     try {
-    const blockNumber = await web3.eth.getBlockNumber();
-    const block = await web3.eth.getBlock(blockNumber);
-    if (block) {
 
-      const timestamp = block.timestamp;
-
-      let timeleftInSecs = Number(_timestamp) - Number(timestamp)
-
-      let timeleftInMins = timeleftInSecs/60
-
-      let timeleftInHrs = timeleftInSecs/3600
-
-      let timeleftInDays = timeleftInHrs/24
-
-      if ( timeleftInDays >= 1 ){
-         return Math.round(timeleftInDays) + " Days Left";
-      }
-      else if ( timeleftInHrs >= 1 ) {
-         return Math.round(timeleftInHrs) + " Hours Left";
-      }
-      else if ( timeleftInMins >= 1 ) {
-        return Math.round(timeleftInMins) + " Mins Left";
-      }else if( timeleftInSecs >= 1 ){
-        return (  Math.round( timeleftInSecs ) + " Secs Left")
-      }else{
-        return "Just concluded";
-      }
-     
-    } else {
-      console.error(`Block ${blockNumber} not found`);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error occurred while fetching current block timestamp:', error);
-    throw error;
-  }
 }

@@ -1216,7 +1216,7 @@ web3 = new Web3 (window.ethereum)
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)
 
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
 	var amountRaised = getCampaign.amountCollected;
 	var target = getCampaign.target;
@@ -1229,7 +1229,7 @@ web3 = new Web3 (window.ethereum)
 	 
 const solveTimeout = async ( ) => {
 	
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x54680E25106Ce038b60714f1d29dB08251A06222");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
 	var deadline = Number(getCampaign.deadline);
 	  let endDate = new Date(deadline *1000)
@@ -1401,9 +1401,9 @@ fundMarkup.onclick = async (  ) => {
 		let account = accounts[0];
 		const web3 = new Web3(window.ethereum)
 		let amount = web3.utils.toWei(`${input}`, "ether");
-
+		console.log(projectId, "id")
 		const ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273");
-		const approval = await ensc_contract.methods.approve("0x54680E25106Ce038b60714f1d29dB08251A06222", amount).send({
+		const approval = await ensc_contract.methods.approve("0x2Fd37f659Fb769E09D275be5D638b0E96D862acC", amount).send({
 			from: account
 		})
 

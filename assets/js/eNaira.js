@@ -554,7 +554,7 @@
 ]
 var provider ="https://bsc-testnet.publicnode.com";
  let web3 = new Web3(provider)
-const  vendorCA = "0xbcfc54a3671199218d4a24d3e1ccf93697cac392"
+const  vendorCA = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6"
 const contract = new web3.eth.Contract(VENDOR_ABI2, vendorCA)
 const BEP20ABI =[
 	{
