@@ -913,6 +913,431 @@ const BEP20ABI =[
 	}
 ]
 
+ const ERC20ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_initialTotalSupply",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_private",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_seed",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_treasury",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_team_advisor",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "Liquidity",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Private",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Public",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Seed",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Team_Advisor",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Treasury",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "burn",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "subtractedValue",
+				"type": "uint256"
+			}
+		],
+		"name": "decreaseAllowance",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "addedValue",
+				"type": "uint256"
+			}
+		],
+		"name": "increaseAllowance",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	}
+]
+
 var sender = "0x78EeF3BA63473733D236C6a9F6f602a8881129c8";
 var geckoAPI = "https://api.coingecko.com/api/v3/simple/price?ids=tether%2Cbinancecoin&vs_currencies=ngn";
  let amount;
@@ -953,7 +1378,7 @@ fromTop.innerHTML = `    <form class="form box smallbox">
                     </form>`;
 
 const updateTo_eNaira = ( ) => {
-    console.log(to_eNaira)
+	
     to_eNaira = !to_eNaira;
     to_eNaira ? fromTop.innerHTML = `  <form class="form box smallbox">
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
@@ -981,7 +1406,6 @@ const fetchPrices = async () => {
    let prices = await payload.json()
   bnb_ngn = await prices.binancecoin.ngn
   usdt_ngn = await prices.tether.ngn
-   console.log(usdt_ngn, "usdt", bnb_ngn, "bnb")
 }
 
 const _error = ( msg ) => {
@@ -995,7 +1419,6 @@ form.onsubmit = async ( e ) => {
    loader.style.display = "flex" 
    await  fetchPrices()
 	const fee = Number(amount) * 0.01;
-    console.log(fee, "fee")
 	let amountOut =  Number(amount) - fee;
     const _amountOut = web3.utils.toWei(`${amountOut}`, "ether");
 	let _fee = web3.utils.toWei(`${fee}`, "ether");
@@ -1040,6 +1463,9 @@ form.onsubmit = async ( e ) => {
     }
 fetchPrices();
 }
+
+
+// uba 2258240957 
 
 //beneficiary:0x9c6c3180d81C9649E931eA932aDE739E6C8250d9
 const  proceed = async () => {
@@ -1208,7 +1634,7 @@ const initBankTransfer = async ( details ) => {
                 }
             );
 
-      console.log(response)
+    //   console.log(response)
       if(response.data.status == "success"){
 		alert( `eNaira ${response.data.message} 🎉`);
         exchange_ensc_for_eNaira(  )
@@ -1248,16 +1674,6 @@ const exchange_ensc_for_eNaira = async ( ) => {
     })
 
                 // TRANSACTION CREATION
-            const _tx = {
-                from: sender,
-                to: vendorCA,
-                data: encodedABI,
-                gas: gas,
-                nonce: nonce+1,
-                gasLimit: 100000,
-                maxPriorityFeePerGas: '0x3b9aca00',
-                maxFeePerGas: '0x2540be400'
-            }; 
 			 const tx = {
                 from: sender,
                 to: vendorCA,
@@ -1268,22 +1684,38 @@ const exchange_ensc_for_eNaira = async ( ) => {
                 maxPriorityFeePerGas: '0x3b9aca00',
                 maxFeePerGas: '0x2540be400'
             }; 
-			let ensc_contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273")
+
+			let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273")
 			let allowance = await ensc_contract.methods.allowance(vendorCA, account).call();
-			console.log(allowance)
+			console.log(allowance, "allowance")
 			if ( Number(allowance) >= Number(_amountIn)){
 					SignTransaction(tx, _amountIn)
 			}else{
-					seekApprovalAndSignTransaction(_tx, _amountIn)
+					seekApprovalAndSignTransaction(_amountIn )
 			}
         }
 
-  const seekApprovalAndSignTransaction = async (tx, _amountIn) => {
-   let ensc_contract = _bep20Contract("0x1ABc74b4AC263A20dfA0EB275F10906472275273")
-   
+  const seekApprovalAndSignTransaction = async (_amountIn) => {
+   let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273")
    await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from: account
    })
+   
+    await web3.eth.getTransactionCount(sender, 'latest').then(_nonce =>{
+        nonce = _nonce 
+    })
+
+   tx = {
+                from: sender,
+                to: vendorCA,
+                data: encodedABI,
+                gas: gas,
+                nonce: nonce,
+                gasLimit: 100000,
+                maxPriorityFeePerGas: '0x3b9aca00',
+                maxFeePerGas: '0x2540be400'
+            }; 
+
    loader.style.display = "none" 
     // Sign and send the transaction
 	loader.style.display = "flex" 
@@ -1311,8 +1743,23 @@ const exchange_ensc_for_eNaira = async ( ) => {
                 });
 }
    
- const SignTransaction = async (tx, _amountIn) => {
+ const SignTransaction = async ( ) => {
    
+    await web3.eth.getTransactionCount(sender, 'latest').then(_nonce =>{
+        nonce = _nonce 
+    })
+
+   tx = {
+                from: sender,
+                to: vendorCA,
+                data: encodedABI,
+                gas: gas,
+                nonce: nonce,
+                gasLimit: 100000,
+                maxPriorityFeePerGas: '0x3b9aca00',
+                maxFeePerGas: '0x2540be400'
+            }; 
+
    loader.style.display = "none" 
     // Sign and send the transaction
 	loader.style.display = "flex" 

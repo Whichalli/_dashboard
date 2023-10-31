@@ -1323,7 +1323,7 @@ var tokenOut;
 var contractAddress;
 var ensc_contract;
 var ensc_vendor_contract;
-var vendorCA = "0xbcfc54a3671199218d4a24d3e1ccf93697cac392"
+var vendorCA = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6"
 var enscCA = "0x1ABc74b4AC263A20dfA0EB275F10906472275273"
 // const __error = ( error ) => {
 //     console.error(error)

@@ -1412,7 +1412,7 @@ fundMarkup.onclick = async (  ) => {
 		})
 
 		alert("Campaign funded successfully 🎉🎉");
-		getDonators()
+		// getDonators()
 	} catch (error) {
 		console.error(error)
 	}
