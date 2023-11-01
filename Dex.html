@@ -170,6 +170,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height:40vh;
         }
         .smallbox{
             width: 50%;
@@ -275,6 +276,15 @@ div.tokens {
     height: 30px;
     border-radius: 50%;
 }
+
+@media (max-width: 600px) {
+    .smallbox{
+        width:100%;
+    }
+    .fromTop{
+       height: 80vh;
+    }
+}
     </style>
     <!-- eNaira section starts here  -->
             <div class=" fromTop container p-3">      
@@ -299,7 +309,7 @@ div.tokens {
                             <input type="text" id="tokenIn" class="input is-info is-light" placeholder="Token In">
                             <div class="Select">
                                 <div class="metadata">
-                                    <button class="btn2 button is-small is-info is-dark find"> <span>Select a Token </span><i
+                                    <button class="btn2 button is-small is-info is-dark find"> <span>Token </span><i
                                             class="fa-solid fa-angle-down ml-2"></i></button>
                                 </div>
                             </div>

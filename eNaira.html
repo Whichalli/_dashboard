@@ -174,6 +174,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 40vh;
         }
         .smallbox{
             width: 50%;
@@ -185,6 +186,19 @@
         .larger{
             font-size: larger;
         }
+        
+
+@media (max-width: 600px) {
+    .smallbox{
+        width:100%;
+    }
+    .fromTop{
+       height: 80vh;
+    }
+    .larger{
+        font-size: revert;
+    }
+}
     </style>
     <!-- eNaira section starts here  -->
             <div class=" fromTop container p-3">      
