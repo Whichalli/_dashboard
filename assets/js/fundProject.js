@@ -1211,7 +1211,7 @@ var ensc_price;
 
 web3 = new Web3 (window.ethereum)
 
-	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xbcfc54a3671199218d4a24d3e1ccf93697cac392");
+	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6");
 	oracleRate = await oracleContract.methods.USD_RATE().call()
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)

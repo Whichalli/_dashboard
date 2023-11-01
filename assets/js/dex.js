@@ -1288,7 +1288,7 @@ const whitelistedTokens = [
 
 const usdc_contractAddress = "0x64544969ed7EBf5f083679233325356EbE738930";
 const usdt_contractAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
-const ensc_contractAddress = "0x1E3c63162310e116ab8278a8D522817d8D4c0635";
+const ensc_contractAddress = "0x1ABc74b4AC263A20dfA0EB275F10906472275273";
 const _ensc_vendor_contractAddress = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6";
 //0x5c0be7e91E596b4e4187eAd554A2cE865a24FB41
 //0x1E3c63162310e116ab8278a8D522817d8D4c0635 token
@@ -1299,7 +1299,8 @@ const spin = document.querySelector(".spin")
 var tokens = document.querySelector(".tokens")
 var token = document.querySelectorAll(".token");
 const bal = document.querySelector(".bal")
-var logo1 = document.querySelector("#logo1")
+const TokenOutBal = document.querySelector(".bal")
+var tokenOutLogo = document.querySelector("#tokenOutLogo")
 const connectBtn  = document.querySelector("#connect")
 const form = document.querySelector("form")
 const loader = document.querySelector(".loader_first")
@@ -1318,8 +1319,9 @@ var TokenBalance;
 var symbol;
 var  amountIn;
 var amountOut;
-var tokenIn;
-var tokenOut;
+var tokenIn = null;
+var tokenOut = {name: 'ENSC Energy', ca: ensc_contractAddress, 
+                logo: 'assets/images/ENSC.png', symbol: 'ENSC', decimal: '18' };
 var contractAddress;
 var ensc_contract;
 var ensc_vendor_contract;
@@ -1331,12 +1333,11 @@ var enscCA = "0x1ABc74b4AC263A20dfA0EB275F10906472275273"
 
 
 findButton.onclick = ( e ) => {
-    console.log("clicked")
     e.preventDefault();
     tokens.innerHTML = ""
     whitelistedTokens.forEach( (token ) => {
         tokens.innerHTML += `
-                           <div class="token box" onclick="setData({name: '${token.name}', ca: '${token.ca}', 
+                           <div class="token box" onclick="setTokenIn({name: '${token.name}', ca: '${token.ca}', 
                            logo: '${token.logo}', symbol: '${token.symbol}', decimal: '${token.decimal}' })"> 
                                 <div class="img">
                                     <img src="assets/images/${token.logo}" alt="">
@@ -1349,9 +1350,11 @@ findButton.onclick = ( e ) => {
 
 const setTokenOut = async ( e ) => {
 	tokenOut = e;
+	TokenBalance = await  fetchBal(tokenOut.ca);
+   TokenOutBal.InnerText = ` ${TokenBalance}`;
 }
 
-const setData =  async ( e ) => {
+const setTokenIn =  async ( e ) => {
 	tokenIn = e
     tokenInCA = e.ca;
    tokens.classList.toggle("hide")
@@ -1364,17 +1367,17 @@ const fetchBal = async ( _contractAddress ) => {
     var accounts = await connectWallet();
     Address = accounts[0]
     _web3 = new Web3(window.ethereum)
-    console.log(_web3)
           if ( _contractAddress == usdt_contractAddress ){
-    console.log(_contractAddress, "ca")
          _contract = new _web3.eth.Contract(BEP20ABI, _contractAddress );
          _token_bal = await _contract.methods.balanceOf(Address).call({
             from:Address
          })
-         console.log(_token_bal, "bal2")
          let _bal = _web3.utils.fromWei(_token_bal, "ether");
          return (_bal)
           }else {
+			
+		var accounts = await connectWallet();
+		Address = accounts[0]
          _contract = new _web3.eth.Contract(ERC20ABI, _contractAddress );
          _token_bal = await _contract.methods.balanceOf(Address).call()
          let _bal = _web3.utils.fromWei(_token_bal, "ether");
@@ -1498,7 +1501,6 @@ TokenInInput.onkeyup = async ( ) => {
     To.disabled = "true"
 
     symbol = tokenIn.symbol;
-    console.log(symbol)
     switch (symbol) {
         case "USDT":
             rates = await fetch(coinGeckoAPI);
@@ -1506,12 +1508,9 @@ TokenInInput.onkeyup = async ( ) => {
             console.log(_rate)
             rate = _rate.tether.ngn;
             amountIn = parseFloat( `${From.value}` );
-            console.log(rate)
 			 fee = amountIn * 0.01;
 			 _fee = parseFloat(fee) * parseFloat(rate);
-			console.log(_fee, "fee"); 
             amountOut =  (parseFloat(amountIn) * parseFloat(rate)) - _fee;
-			console.log(amountOut, "out")
             To.value = amountOut;
             break;
     
@@ -1523,9 +1522,7 @@ TokenInInput.onkeyup = async ( ) => {
             console.log(rate)
 			 fee = amountIn * 0.01;
 			 _fee = parseFloat(fee) / parseFloat(rate);
-			 console.log(_fee,"fee");
             amountOut = (parseFloat(amountIn) / parseFloat(rate)) - _fee ;
-			console.log(amountOut, "out")
             To.value = amountOut;
             break;
 
@@ -1535,19 +1532,21 @@ TokenInInput.onkeyup = async ( ) => {
 }
 
  const spinUp = (  ) => {
-    setTokenOut(tokenIn);
     spin.style.transitionDuration = "2s"
     spin.style.rotate = '360deg';
-    tokenOut.innerHTML = tokenIn.symbol;
-    logo1.src= `assets/images/${tokenIn.logo}`;
-    findButton.innerHTML = "ENSC Energy";
-    findButton.disabled="true"
-    To.disabled = "true"
+ if(tokenOut.symbol == "ENSC" && tokenIn != null ) {
+    setTokenOut(tokenIn);
+    tokenOutLogo.src= `assets/images/${tokenOut.logo}`;
+    tokenOUT.innerHTML = tokenOut.symbol;
+	//disable find btn
+    findButton.disabled = "true"
      tokens.classList.toggle("hide")
-    setData({name: 'ENSC Energy', ca: ensc_contractAddress, 
+    setTokenIn({name: 'ENSC Energy', ca: ensc_contractAddress, 
                 logo: 'assets/images/ENSC.png', symbol: 'ENSC', decimal: '18' })
     From.placeholder = " From ENSC Energy"
-
-    bal.innerHTML = `Balance: <span id="bal">${ TokenBalance}</span>`;
+    findButton.innerHTML = "ENSC Energy";
+ }else{
+	console.log("select a token in");
+ }
 }
 
