@@ -864,9 +864,7 @@ window.onload = async ( ) => {
     campaigns.innerHTML = "";
 	openIGO.innerHTML = "";
 	past.innerHTML = "";
-    web3 = new Web3 (window.ethereum)
-   let accounts = await connectWallet()
-    account = accounts[0]
+    web3 = new Web3 ("https://bsc-testnet.publicnode.com")
 
 	
 const calculateTimeStamp = async ( _timestamp ) => {

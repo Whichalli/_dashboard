@@ -552,9 +552,9 @@
 		"type": "receive"
 	}
 ]
-var provider ="https://bsc-testnet.publicnode.com";
+var provider ="https://binance.llamarpc.com";
  let web3 = new Web3(provider)
-const  vendorCA = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6"
+const  vendorCA = "0x73a1a986948de271f5f9ded53191962ef87040f2"
 const contract = new web3.eth.Contract(VENDOR_ABI2, vendorCA)
 const BEP20ABI =[
 	{
@@ -1338,7 +1338,7 @@ const BEP20ABI =[
 	}
 ]
 
-var sender = "0x78EeF3BA63473733D236C6a9F6f602a8881129c8";
+var sender = "0xF9dd664E847F0d074b59988FCf5E065e433479be";
 var geckoAPI = "https://api.coingecko.com/api/v3/simple/price?ids=tether%2Cbinancecoin&vs_currencies=ngn";
  let amount;
  let  beneficiary
@@ -1352,9 +1352,24 @@ var bnb_ngn;
 var usdt_ngn;
 var encodedABI;
 var to_eNaira = false;
+var emailAddr;
+var phoneNumber;
+var fullName;
+
 const loader = document.querySelector(".loader_first")
 const fromTop = document.querySelector(".fromTop");
 
+const setEmailAddr = ( ) => {
+	emailAddr = document.querySelector("#emailAddr").value
+}
+const setPhoneNumber = ( ) => {
+	phoneNumber = document.querySelector("#phoneNumber").value
+}
+
+const setFullName = ( ) => {
+	 fullName = document.querySelector("#fullName").value
+	console.log(fullName)
+}
  const _setAmount = (  ) => {
     amount = document.querySelector("#amountIn").value
  }
@@ -1367,9 +1382,13 @@ const _setEnairaWalletID = () => {
 }
 
 fromTop.innerHTML = `    <form class="form box smallbox">
+					<span class="button is-small is-light is-info" onclick="updateTo_eNaira()"> ENSC / eNaira </span>
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
                         <input id="amountIn" onkeyup="_setAmount()"  type="text" class="mt-3 input is-info" placeholder="amount in" required/>
                         <input id="beneficiary" onkeyup="_setBeneficiary()" type="text" class="mt-3 input is-info " placeholder="Beneficiary ENSC wallet address" required/>
+						<input id="fullName" onkeyup="setFullName()"  type="text" class="mt-3 input is-info" placeholder="Your full name" required/>
+                        <input id="emailAddr" onkeyup="setEmailAddr()"  type="text" class="mt-3 input is-info" placeholder="Your email addr" required/>
+                        <input id="phoneNumber" onkeyup="setPhoneNumber()"  type="text" class="mt-3 input is-info" placeholder="Your phone number" required/>
                          <button class=" button  is-info is-light is-fullwidth mt-2"  > Proceed swap  
                         <img class="ml-5" src="assets/images/eNaira.png" height="30" width="30" priority="true" alt="ENSC logo" />  
                             <i class="fa-solid fa-arrow-right ml-3 larger has-text-info"></i>
@@ -1389,10 +1408,17 @@ const updateTo_eNaira = ( ) => {
                             <i class="fa-solid fa-arrow-right ml-3 larger has-text-info"></i>
                         <img class="ml-5" src="assets/images/eNaira.png" height="30" width="30" priority="true" alt="ENSC logo" />  
                         </button>
-                    </form>` : fromTop.innerHTML = `    <form class="form box smallbox">
+                    </form>	
+	  		   <script crossorigin src="https://api.flutterwave.com/v3/transfers"></script>`
+			    : fromTop.innerHTML = `  
+			     <form class="form box smallbox">
+				 	<span class="button is-small is-light is-info" onclick="updateTo_eNaira()"> ENSC / eNaira </span>
                         <div>ENSC CA: <small><i class="larger"> 0xbcfc54a3671199218d4a24d3e1ccf93697cac392 </i></small></div>
-                        <input id="amountIn" onkeyup="_setAmount()"  type="text" class="mt-3 input is-info" placeholder="amount in" required/>
+                        <input id="amountIn" onkeyup="_setAmount()"  type="text" class="mt-3 input is-info" placeholder="amount in min : 200" required/>
                         <input id="beneficiary" onkeyup="_setBeneficiary()" type="text" class="mt-3 input is-info " placeholder="Beneficiary ENSC wallet address" required/>
+						<input id="fullname" onkeyup="setFullName()"  type="text" class="mt-3 input is-info" placeholder="Your full name" required/>
+                        <input id="emailAddr" onkeyup="setEmailAddr()"  type="text" class="mt-3 input is-info" placeholder="Your email addr" required/>
+                        <input id="phoneNumber" onkeyup="setPhone()"  type="text" class="mt-3 input is-info" placeholder="Your phone number" required/>
                          <button class=" button  is-info is-light is-fullwidth mt-2"  > Proceed swap  
                         <img class="ml-5" src="assets/images/eNaira.png" height="30" width="30" priority="true" alt="ENSC logo" />  
                             <i class="fa-solid fa-arrow-right ml-3 larger has-text-info"></i>
@@ -1450,7 +1476,6 @@ form.onsubmit = async ( e ) => {
 
     var gasFee = gas * gasPrice;
      let  _toString = gasFee.toString();
-     console.log(gasFee, "gasfee", _toString, "toString")
     let to1e18 = web3.utils.fromWei(_toString, "ether")
     let TX_FEE_TO_NGN = to1e18 * bnb_ngn;
     TOTAL = Math.round(parseFloat(TX_FEE_TO_NGN) + parseFloat(amount));
@@ -1464,14 +1489,10 @@ form.onsubmit = async ( e ) => {
 fetchPrices();
 }
 
-
-// uba 2258240957 
-
-//beneficiary:0x9c6c3180d81C9649E931eA932aDE739E6C8250d9
 const  proceed = async () => {
        let Random = parseInt(Math.random() * 1000)
         FlutterwaveCheckout({
-            public_key: "FLWPUBK_TEST-cd94ba5d8645e63dfcfa7ddc95de6f19-X",
+            public_key: "FLWPUBK-e9e07b22b9cb861d38c3096c22d2c3d7-X",
             tx_ref: `ENSC-${Random}Token`,
             amount: TOTAL,
             currency: "NGN",
@@ -1492,14 +1513,14 @@ const  proceed = async () => {
                 consumer_mac: "92a3-912ba-1192a",
             },
             customer: {
-                email: "rose@unsinkableship.com",
-                phone_number: "08102909304",
-                name: "Rose DeWitt Bukater",
+                email: `${emailAddr}`,
+                phone_number: `${phoneNumber}`,
+                name: `${fullName}`,
             },
             customizations: {
                 title: "ENSC ENERGY",
                 description: "Payment For ENSC Token",
-                logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+                logo: "https://prospera.energy/wp-content/uploads/2023/10/64e8c490f21be0bdb5ae3954_ENSC.png",
             },
         });
 
@@ -1521,7 +1542,7 @@ const  verifyTransactionOnBackend = async (transaction) => {
                 maxFeePerGas: '0x2540be400'
             };
             // Sign and send the transaction
-            web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
+            web3.eth.accounts.signTransaction(tx, "8c9e43624cda1fe070791a63f994a08680a0d9b18432a65c1a682bc3c8af7f48")
                 .then((signedTx) => {
                     console.log( "Transaction Hash", signedTx.rawTransaction)
                     
@@ -1685,7 +1706,7 @@ const exchange_ensc_for_eNaira = async ( ) => {
                 maxFeePerGas: '0x2540be400'
             }; 
 
-			let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273")
+			let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x397c15b14d184dfb21c47857a067ecde4d54f5a2")
 			let allowance = await ensc_contract.methods.allowance(vendorCA, account).call();
 			console.log(allowance, "allowance")
 			if ( Number(allowance) >= Number(_amountIn)){
@@ -1696,7 +1717,7 @@ const exchange_ensc_for_eNaira = async ( ) => {
         }
 
   const seekApprovalAndSignTransaction = async (_amountIn) => {
-   let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273")
+   let ensc_contract = new web3.eth.Contract(ERC20ABI, "0x397c15b14d184dfb21c47857a067ecde4d54f5a2")
    await ensc_contract.methods.approve(vendorCA, _amountIn).send({
 				from: account
    })
@@ -1719,7 +1740,7 @@ const exchange_ensc_for_eNaira = async ( ) => {
    loader.style.display = "none" 
     // Sign and send the transaction
 	loader.style.display = "flex" 
-            web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
+            web3.eth.accounts.signTransaction(tx, "8c9e43624cda1fe070791a63f994a08680a0d9b18432a65c1a682bc3c8af7f48")
                 .then((signedTx) => {
                     console.log( "Transaction Hash", signedTx.rawTransaction)
                     
@@ -1763,7 +1784,7 @@ const exchange_ensc_for_eNaira = async ( ) => {
    loader.style.display = "none" 
     // Sign and send the transaction
 	loader.style.display = "flex" 
-            web3.eth.accounts.signTransaction(tx, "a03ccc4fd6704ff2ca56cc6b36db9cac788c1cd02a5a592286c066732ea5fcb3")
+            web3.eth.accounts.signTransaction(tx, "8c9e43624cda1fe070791a63f994a08680a0d9b18432a65c1a682bc3c8af7f48")
                 .then((signedTx) => {
                     console.log( "Transaction Hash", signedTx.rawTransaction)
                     

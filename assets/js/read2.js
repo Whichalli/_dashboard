@@ -861,10 +861,7 @@ window.onload = async ( ) => {
 	const past = document.querySelector(".past-igo");
 
     upcomingCampaigns.innerHTML = "";
-    web3 = new Web3 (window.ethereum)
-   let accounts = await connectWallet()
-    account = accounts[0]
-
+    web3 = new Web3 ("https://bsc-testnet.publicnode.com")
     crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
 	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6");
 	oracleRate = await oracleContract.methods.USD_RATE().call()

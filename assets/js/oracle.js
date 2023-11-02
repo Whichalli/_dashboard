@@ -1,8 +1,8 @@
 
     
 var sender = "0x78EeF3BA63473733D236C6a9F6f602a8881129c8";
-var provider ="https://bsc-testnet.publicnode.com";
-const API = "https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=ngn";
+var provider ="https://binance.llamarpc.com";
+const API = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=ngn";
 const web3 = new Web3(provider);
     let update;
     let nonce;
@@ -560,16 +560,15 @@ const web3 = new Web3(provider);
 		"type": "receive"
 	}
 ]
-const  vendorCA = "0xbcfc54a3671199218d4a24d3e1ccf93697cac392"
+const  vendorCA = "0x73a1a986948de271f5f9ded53191962ef87040f2"
 
 
     const contract = new web3.eth.Contract(VENDOR_ABI2, vendorCA)
 
     const fetchPrices = async ( ) => {
         let request = await fetch(API);
-        let response =  await request.json();
-        let  _usd = response.usd;
-         let rate = Number(_usd.ngn); 
+            _rate = await rates.json()
+            rate = Number(_rate.tether.ngn);
           console.log(rate);
             // invoke the oracle
         oracle( rate )

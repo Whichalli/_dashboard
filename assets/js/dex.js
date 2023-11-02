@@ -553,362 +553,7 @@ const _VENDOR_ABI=[
 	}
 ]
 
-const BEP20ABI =[
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "tName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "tSymbol",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "cap",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "value",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "burn",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "cap",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "decimals",
-		"outputs": [
-			{
-				"internalType": "uint8",
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "subtractedValue",
-				"type": "uint256"
-			}
-		],
-		"name": "decreaseAllowance",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "destroy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "addedValue",
-				"type": "uint256"
-			}
-		],
-		"name": "increaseAllowance",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "mintMore",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "totalSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"stateMutability": "payable",
-		"type": "receive"
-	}
-]
+const BEP20ABI =[{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"constant":true,"inputs":[],"name":"_decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"renounceOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
 
  const ERC20ABI =[
 	{
@@ -1269,7 +914,7 @@ const BEP20ABI =[
 const whitelistedTokens = [
              
               {
-                ca: "0x64544969ed7EBf5f083679233325356EbE738930",
+                ca: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
                 decimal: 6,
                 logo : "usdc.png",
                 name: " USD Coin",
@@ -1277,7 +922,7 @@ const whitelistedTokens = [
                 decimal: 18
               },   
                   {
-                ca: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+                ca: "0x55d398326f99059fF775485246999027B3197955",
                 decimal: 6,
                 logo: "usdt.png",
                 name : "Tether USD₮",
@@ -1286,10 +931,10 @@ const whitelistedTokens = [
               }  
 ]
 
-const usdc_contractAddress = "0x64544969ed7EBf5f083679233325356EbE738930";
-const usdt_contractAddress = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
-const ensc_contractAddress = "0x1ABc74b4AC263A20dfA0EB275F10906472275273";
-const _ensc_vendor_contractAddress = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6";
+const usdc_contractAddress = "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d";
+const usdt_contractAddress = "0x55d398326f99059fF775485246999027B3197955";
+const ensc_contractAddress = "0x397c15b14d184dfb21c47857a067ecde4d54f5a2";
+const _ensc_vendor_contractAddress = "0x73a1a986948de271f5f9ded53191962ef87040f2";
 //0x5c0be7e91E596b4e4187eAd554A2cE865a24FB41
 //0x1E3c63162310e116ab8278a8D522817d8D4c0635 token
 const findButton = document.querySelector(".find");
@@ -1325,8 +970,8 @@ var tokenOut = {name: 'ENSC Energy', ca: ensc_contractAddress,
 var contractAddress;
 var ensc_contract;
 var ensc_vendor_contract;
-var vendorCA = "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6"
-var enscCA = "0x1ABc74b4AC263A20dfA0EB275F10906472275273"
+var vendorCA = "0x73a1a986948de271f5f9ded53191962ef87040f2"
+var enscCA = "0x397c15b14d184dfb21c47857a067ecde4d54f5a2"
 // const __error = ( error ) => {
 //     console.error(error)
 // };
@@ -1441,6 +1086,55 @@ form.onsubmit = async ( e ) => {
 				console.error(error.message);
 			}
 			break;
+					case "USDC":
+			try {
+			let _amountIn = _web3.utils.toWei(`${Number(amountIn)}`, "ether");
+			let _amountOut = _web3.utils.toWei(`${Number(amountOut)}`, "ether");
+			let txFee = _web3.utils.toWei(`${_fee}`, "ether");
+			let _tokenIn = tokenIn.ca;
+		_contract = new _web3.eth.Contract(BEP20ABI, _tokenIn );
+        ensc_vendor_contract = new _web3.eth.Contract(_VENDOR_ABI, vendorCA)
+		     //check if _amountOut is valid number
+			 if ( _amountOut !== null ){
+				loader.style.display = "flex" 
+			//check allowance level
+			let allowance = await _contract.methods.allowance(Address, vendorCA).call();
+			loader.style.display = "none" 
+			if ( Number(allowance) >= Number(_amountIn) ){
+				//procced with exchange
+				loader.style.display = "flex" 
+			await ensc_vendor_contract.methods.Exchange_For_ENSC ( _tokenIn, _amountIn, _amountOut, txFee ).send({
+				from: Address
+			});
+			loader.style.display = "none" 
+				fetchBal(enscCA)
+			}else {
+				loader.style.display = "flex" 
+			//seek approval to spend amountIn from user balance
+			await _contract.methods.approve(vendorCA, _amountIn).send({
+				from: Address
+			});
+			// Vendors has been approved to spend  balance ENSC balance of onlyOwner
+			//procced with exchange
+			await ensc_vendor_contract.methods.Exchange_For_ENSC ( _tokenIn, _amountIn, _amountOut, txFee ).send({
+				from: Address
+			});
+			loader.style.display = "none" 
+				fetchBal(enscCA)
+				alert("Transaction  successful 🎉🎉")
+		 }
+		
+			 }else{
+				
+				loader.style.display = "none" 
+				alert("calulating amount out.")
+			 }
+			} catch (error) {
+				loader.style.display = "none" 
+				alert("Transaction Failed ❌")
+				console.error(error.message);
+			}
+			break;
 		case "ENSC" : 
 		try {
             
@@ -1505,7 +1199,6 @@ TokenInInput.onkeyup = async ( ) => {
         case "USDT":
             rates = await fetch(coinGeckoAPI);
             _rate = await rates.json()
-            console.log(_rate)
             rate = _rate.tether.ngn;
             amountIn = parseFloat( `${From.value}` );
 			 fee = amountIn * 0.01;
@@ -1513,13 +1206,21 @@ TokenInInput.onkeyup = async ( ) => {
             amountOut =  (parseFloat(amountIn) * parseFloat(rate)) - _fee;
             To.value = amountOut;
             break;
-    
+      case "USDC":
+            rates = await fetch(coinGeckoAPI);
+            _rate = await rates.json()
+            rate = _rate.tether.ngn;
+            amountIn = parseFloat( `${From.value}` );
+			 fee = amountIn * 0.01;
+			 _fee = parseFloat(fee) * parseFloat(rate);
+            amountOut =  (parseFloat(amountIn) * parseFloat(rate)) - _fee;
+            To.value = amountOut;
+            break;
             case "ENSC": 
              rates = await fetch(coinGeckoAPI);
             _rate = await rates.json()
             rate = _rate.tether.ngn;
             amountIn = parseFloat( `${From.value}` );
-            console.log(rate)
 			 fee = amountIn * 0.01;
 			 _fee = parseFloat(fee) / parseFloat(rate);
             amountOut = (parseFloat(amountIn) / parseFloat(rate)) - _fee ;
@@ -1546,7 +1247,7 @@ TokenInInput.onkeyup = async ( ) => {
     From.placeholder = " From ENSC Energy"
     findButton.innerHTML = "ENSC Energy";
  }else{
-	console.log("select a token in");
+	alert("select a token in");
  }
 }
 

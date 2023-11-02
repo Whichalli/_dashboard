@@ -1205,18 +1205,18 @@ const projectId = document.querySelector(".projectId").value
 const data1 = document.querySelector(".data1")
 const data2 = document.querySelector(".p-info")
 const data3 = document.querySelector(".t-info")
-
+const CrowdFundingContractAddress = "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC"
 var oracleRate;
 var ensc_price;
 
-web3 = new Web3 (window.ethereum)
+web3 = new Web3 ("https://bsc-testnet.publicnode.com")
 
 	oracleContract = new web3.eth.Contract(VENDOR_ABI, "0xD1c0db31c48b97Fc30b07C5fb4115DB6Cb389dF6");
 	oracleRate = await oracleContract.methods.USD_RATE().call()
 	let price = 1/Number(oracleRate)
 	ensc_price = price.toFixed(5)
 
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, CrowdFundingContractAddress);
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
 	var amountRaised = getCampaign.amountCollected;
 	var target = getCampaign.target;
@@ -1229,7 +1229,7 @@ web3 = new Web3 (window.ethereum)
 	 
 const solveTimeout = async ( ) => {
 	
-    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, "0x2Fd37f659Fb769E09D275be5D638b0E96D862acC");
+    crowdFundingContract = new web3.eth.Contract(crowdFundingABI, CrowdFundingContractAddress);
     const getCampaign = await crowdFundingContract.methods.campaigns(projectId).call();
 	var deadline = Number(getCampaign.deadline);
 	  let endDate = new Date(deadline *1000)
@@ -1310,7 +1310,7 @@ const solveTimeout = async ( ) => {
                 <div class="banner-bottom-content mt-40">
                     <div class="btn-area" data-bs-toggle="modal" data-bs-target="#fundingModal">
                         <a class="readon white-shape-small" href="#">
-                            <span class="btn-text">Fund Project </span>
+                            <span class="btn-text" disabled="true">Fund Project 🚫</span>
                             <span class="hover-shape1"></span>
                             <span class="hover-shape2"></span>
                             <span class="hover-shape3"></span>
@@ -1361,7 +1361,7 @@ const solveTimeout = async ( ) => {
                                         <li>Token Name <span>ENSC Energy</span></li>
                                         <li>Token Symbol <span>ENSC</span></li>
                                         <li>Decimals <span>18</span></li>
-                                        <li>Address <span><img src="assets/images/project/icon.png" alt="project"/>0x1ABc74b4AC263A20dfA0EB275F10906472275273</span></li>
+                                        <li>Address <span><img src="assets/images/project/icon.png" alt="project"/>0x397c15b14d184dfb21c47857a067ecde4d54f5a2</span></li>
                                         <li>Total Supply <span>20,000,000,000 ENSC</span></li>
                                     </ul>
                                 </div>
@@ -1402,8 +1402,8 @@ fundMarkup.onclick = async (  ) => {
 		const web3 = new Web3(window.ethereum)
 		let amount = web3.utils.toWei(`${input}`, "ether");
 		console.log(projectId, "id")
-		const ensc_contract = new web3.eth.Contract(ERC20ABI, "0x1ABc74b4AC263A20dfA0EB275F10906472275273");
-		const approval = await ensc_contract.methods.approve("0x2Fd37f659Fb769E09D275be5D638b0E96D862acC", amount).send({
+		const ensc_contract = new web3.eth.Contract(ERC20ABI, "0x397c15b14d184dfb21c47857a067ecde4d54f5a2");
+		const approval = await ensc_contract.methods.approve(CrowdFundingContractAddress, amount).send({
 			from: account
 		})
 
